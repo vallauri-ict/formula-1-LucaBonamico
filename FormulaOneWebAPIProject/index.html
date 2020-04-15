@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Formula One</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container-fluid" id="div">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 text-center">
+                <h1 class="text-center">Formula One</h1>
+                <hr />
+                <button id="btnDrivers" class="btn btn-primary" style="margin: 15px;" v-on:click="driversClick()">Drivers</button>
+                <button id="btnTeams" class="btn btn-primary" style="margin: 15px;" v-on:click="teamsClick()">Teams</button>
+                <button id="btnCircuits" class="btn btn-primary" style="margin: 15px;" v-on:click="circuitsClick()">Circuits</button>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="txtRicerca" placeholder="Cerca per id" v-model="idRicerca" v-on:input="ricerca()" v-bind:disabled="stringa==''"/>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <hr />
+        
+        <div class="row" v-if="error!=''">
+            <div class="col-sm-12">
+                <h3 class="text-center" style="color: red"> {{ error }}</h3>
+            </div>
+        </div>
+        <!-- drivers card -->
+        <div class="row" v-for="(row, index) in rows" v-if="stringa=='drivers' && error==''">
+            <div class="col-sm-4" v-for="(driver) in row">
+                <div class="card" style="display: block; margin: 10px auto; width: 18rem;">
+                    <img class="card-img-top" v-bind:src="driver.img" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ driver.firstname }} {{ driver.lastname }}</h5>
+                        <p class="card-text">{{ driver.description.substring(0, 150) }}...</p>
+                        <a href="#" class="btn btn-link" style="margin: 0 auto;">More Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- teams card -->
+        <div class="row" v-for="(row, index) in rows" v-if="stringa=='teams' && error==''">
+            <div class="col-sm-4" v-for="(team) in row">
+                <div class="card" style="display: block; margin: 10px auto; width: 18rem;">
+                    <img class="card-img-top" v-bind:src="team.img" alt="Card image cap" style="width: 286px; height: 136.5px">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ team.name }} </h5>
+                        <p class="card-text"> {{ team.fullTeamName }} </p>
+                        <a href="#" class="btn btn-link" style="margin: 0 auto;">More Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- circuits card -->
+        <div class="row" v-for="(row, index) in rows" v-if="stringa=='circuits' && error==''">
+            <div class="col-sm-4" v-for="(circuit) in row">
+                <div class="card" style="display: block; margin: 10px auto; width: 18rem; height: 350px;">
+                    <img class="card-img-top" v-bind:src="circuit.img" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ circuit.name }} </h5>
+                        <p class="card-text"> {{ circuit.country.countryName }} </p>
+                        <a href="#" class="btn btn-link" style="margin: 0 auto;">More Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

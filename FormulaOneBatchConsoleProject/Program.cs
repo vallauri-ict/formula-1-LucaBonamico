@@ -17,8 +17,8 @@ namespace FormulaOneBatchConsoleProject
             "Teams",
             "Circuits",
             "Races",
-            "RacesScores",
-            "Scores"
+            "Scores",
+            "RacesScores"
         };
 
         static void Main(string[] args)
@@ -27,25 +27,22 @@ namespace FormulaOneBatchConsoleProject
             do
             {
                 Console.WriteLine("*** FORMULA ONE - BATCH SCRIPTS ***");
-                Console.WriteLine("C - Create all db");
-                Console.WriteLine("S - Set all constraints");
-                Console.WriteLine("D - Drop all db");
-                Console.WriteLine("E - Export to JSON");
+                Console.WriteLine("1 - Create all db & Set all constraints");
+                Console.WriteLine("2 - Drop all db");
+                Console.WriteLine("3 - Export to JSON");
                 Console.WriteLine("------------------------");
                 Console.WriteLine("X - EXIT");
                 scelta = Console.ReadKey(true).KeyChar;
                 switch (scelta)
                 {
-                    case 'C':
+                    case '1':
                         createDB();
-                        break;
-                    case 'S':
                         setConstraints();
                         break;
-                    case 'D':
+                    case '2':
                         resetDB();
                         break;
-                    case 'E':
+                    case '3':
                         string path = @"C:\Dati\db.json";
                         path = Environment.ExpandEnvironmentVariables(path);
                         if (db.SerializeToJSON<Team>(path))
@@ -124,7 +121,7 @@ namespace FormulaOneBatchConsoleProject
 
         private static void setConstraints()
         {
-            CallExecuteSqlScript("SetConstraints.sql");
+            CallExecuteSqlScript("SetConstraints");
         }
     }
 }

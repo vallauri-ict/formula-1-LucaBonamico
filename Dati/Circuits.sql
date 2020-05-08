@@ -5,7 +5,7 @@ CREATE TABLE [dbo].[Circuits] (
     [nLaps]      INT           NOT NULL,
     [extCountry] CHAR (2)      NOT NULL,
     [recordLap]  VARCHAR (30)  DEFAULT (N'') NULL,
-    [img]        VARCHAR (512) DEFAULT (N'') NULL,
+    [img]        VARCHAR (512) NOT NULL,
     PRIMARY KEY CLUSTERED ([id] ASC)
 );
 SET IDENTITY_INSERT [dbo].[Circuits] ON;
@@ -13,7 +13,7 @@ INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [re
 INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (2, N'Melbourne Grand Prix Circuit', 5303, 58, N'AU', N'', N'https://media.motorbox.com/image/f1-gp-bahrain-2019-orari-meteo-risultati-prove-qualifiche-e-gara/6/3/4/634479/634479-16x9-md.jpg');
 INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (3, N'Shanghai International Circuit', 5451, 56, N'CH', N'', N'https://media.motorbox.com/image/f1-gp-cina-2019-orari-meteo-risultati-prove-qualifiche-e-gara/6/3/5/635656/635656-16x9-md.jpg');
 INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (4, N'Baku City Circuit', 5003, 51, N'AZ', N'', N'https://media.motorbox.com/image/f1-gp-azerbaijan-2019-circuito-meteo-risultati-prove-qualifiche-e-gara/6/3/7/637003/637003-16x9-lg.jpg');
-INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (5, N'CIRCUIT DE BARCELONA-CATALUNYA', 4655, 66, N'SP', N'', N'https://media.motorbox.com/image/f1-gp-spagna-2019-orari-meteo-risultati-prove-qualifiche-e-gara/6/3/7/637992/637992-16x9-md.jpg');
+INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (5, N'CIRCUIT DE BARCELONA-CATALUNYA', 4655, 66, N'ES', N'', N'https://media.motorbox.com/image/f1-gp-spagna-2019-orari-meteo-risultati-prove-qualifiche-e-gara/6/3/7/637992/637992-16x9-md.jpg');
 INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (6, N'Circuit de Monaco', 3337, 78, N'MC', N'', N'https://media.motorbox.com/image/f1-gp-monaco-2019-orari-meteo-risultati-prove-qualifiche-e-gara/6/3/9/639590/639590-16x9-md.jpg');
 INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (7, N'Circuit Gilles-Villeneuve', 4361, 70, N'CA', N'', N'https://wheels.iconmagazine.it/content/uploads/2020/03/8-GP-Canada-960x545.png');
 INSERT INTO [dbo].[Circuits] ([id], [name], [length], [nLaps], [extCountry], [recordLap], [img]) VALUES (8, N'Circuit Paul Ricard', 5842, 53, N'FR', N'', N'https://th.autoblog.it/qaPhsKyhnvzsD5-Fon84eU_P0OE=/fit-in/655xorig/https%3A%2F%2Fmedia.autoblog.it%2F1%2F1fa%2Fcircuito-paul-ricard-di-le-castellet-gp-francia-2019.jpg');

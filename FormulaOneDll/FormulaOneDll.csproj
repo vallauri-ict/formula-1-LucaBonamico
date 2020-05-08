@@ -74,6 +74,8 @@
     <Compile Include="Driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
+    <Compile Include="RacesScore.cs" />
+    <Compile Include="Score.cs" />
     <Compile Include="Team.cs" />
   </ItemGroup>
   <ItemGroup>

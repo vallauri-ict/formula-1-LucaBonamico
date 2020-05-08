@@ -21,6 +21,8 @@ namespace FormulaOneDll
         private Dictionary<int, Driver> drivers;
         private Dictionary<int, Circuit> circuits;
         private Dictionary<int, Race> races;
+        private Dictionary<int, RacesScore> racesScores;
+        private Dictionary<int, Score> scores;
 
         public void ExecuteSqlScript(string sqlScriptName)
         {
@@ -188,6 +190,64 @@ namespace FormulaOneDll
             return races;
         }
 
+        public Dictionary<int, RacesScore> GetRacesScores(bool forceReload = false)
+        {
+            if (forceReload || racesScores == null)
+            {
+                racesScores = new Dictionary<int, RacesScore>();
+                var con = new SqlConnection(CONNSTR);
+
+                using (con)
+                {
+                    SqlCommand command = new SqlCommand("SELECT * FROM RacesScores", con);
+                    con.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        RacesScore rS = new RacesScore(
+                            reader.GetInt32(0),
+                            GetDrivers()[reader.GetInt32(1)],
+                            GetScores()[reader.GetInt32(2)],
+                            GetRaces()[reader.GetInt32(3)],
+                            reader.GetString(4)
+                        );
+                        racesScores.Add(rS.Id, rS);
+                    }
+                }
+            }
+            return racesScores;
+        }
+
+        public Dictionary<int, Score> GetScores(bool forceReload = false)
+        {
+            if (forceReload || scores == null)
+            {
+                scores = new Dictionary<int, Score>();
+                var con = new SqlConnection(CONNSTR);
+
+                using (con)
+                {
+                    SqlCommand command = new SqlCommand("SELECT * FROM Scores", con);
+                    con.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Score s = new Score(
+                            reader.GetInt32(0),
+                            reader.GetInt32(1),
+                            reader.GetString(2)
+                        );
+                        scores.Add(s.Pos, s);
+                    }
+                }
+            }
+            return scores;
+        }
+
         public BindingList<Team> LoadTeams()
         {
             BindingList<Team> retVal = new BindingList<Team>();
@@ -219,7 +279,8 @@ namespace FormulaOneDll
                         reader.GetString(6),
                         firstDriver,
                         secondDriver,
-                        reader.GetString(9)
+                        reader.GetString(9),
+                        reader.GetString(10)
                     );
                     retVal.Add(t);
                 }

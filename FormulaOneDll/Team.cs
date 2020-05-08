@@ -28,10 +28,12 @@ namespace FormulaOneDll
         private Driver firstDriver;
         [DataMember(Name = "secondDriver")]
         private Driver secondDriver;
+        [DataMember(Name = "logo")]
+        private string logo;
         [DataMember(Name = "img")]
         private string img;
 
-        public Team(int id, string name, string fullTeamName, Country country, string powerUnit, string technicalChief, string chassis, Driver firstDriver, Driver secondDriver, string img)
+        public Team(int id, string name, string fullTeamName, Country country, string powerUnit, string technicalChief, string chassis, Driver firstDriver, Driver secondDriver, string logo, string img)
         {
             this.Id = id;
             this.Name = name;
@@ -42,6 +44,7 @@ namespace FormulaOneDll
             this.Chassis = chassis;
             this.FirstDriver = firstDriver;
             this.SecondDriver = secondDriver;
+            this.Logo = logo;
             this.Img = img;
         }
 
@@ -54,6 +57,7 @@ namespace FormulaOneDll
         public string Chassis { get => chassis; set => chassis = value; }
         public Driver FirstDriver { get => firstDriver; set => firstDriver = value; }
         public Driver SecondDriver { get => secondDriver; set => secondDriver = value; }
+        public string Logo { get => logo; set => logo = value; }
         public string Img { get => img; set => img = value; }
 
         public override string ToString()

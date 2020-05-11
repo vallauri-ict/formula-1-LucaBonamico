@@ -9,21 +9,23 @@ using FormulaOneDll;
 
 namespace FormulaOneWebAPIProject.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/drivers")]
     public class DriversController : ApiController
     {
         DbTools db = new DbTools();
 
+        [Route("list")]
         public IEnumerable<Driver> GetAllDrivers()
         {
             return db.GetDrivers().Values;
         }
 
+        [Route("{id:int}")]
         public IHttpActionResult GetDriver(int id)
         {
             try
             {
-                Driver d = GetAllDrivers().ElementAt(id);
+                Driver d = db.GetDrivers()[id];
                 return Ok(d);
             }
             catch (Exception)

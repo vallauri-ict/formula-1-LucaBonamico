@@ -1,7 +1,7 @@
 CREATE TABLE [dbo].[Races] (
     [id]         INT           IDENTITY (1, 1) NOT NULL,
     [name]       VARCHAR (128) NOT NULL,
-    [extCircuit] INT 		   NOT NULL,
+    [extCircuit] INT NOT NULL,
     [date]       DATE          NOT NULL,
     PRIMARY KEY CLUSTERED ([id] ASC)
 );
@@ -25,6 +25,7 @@ INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (15, N'FOR
 INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (16, N'FORMULA 1 VTB RUSSIAN GRAND PRIX 2019', 16, N'2019-09-29');
 INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (17, N'FORMULA 1 VTB RUSSIAN GRAND PRIX 2019', 17, N'2019-09-29');
 INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (18, N'FORMULA 1 GRAN PREMIO DE MEXICO 2019', 18, N'2019-10-25');
-INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (19, N'FORMULA 1 HEINEKEN GRANDE PREMIO DO BRASIL 2019', 19, N'2019-11-17');
-INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (20, N'FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2019', 20, N'2019-12-01');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (19, N'FORMULA 1 EMIRATES UNITED STATES GRAND PRIX 2019', 19, N'2019-10-25');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (20, N'FORMULA 1 HEINEKEN GRANDE PREMIO DO BRASIL 2019', 20, N'2019-11-17');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (21, N'FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2019', 21, N'2019-12-01');
 SET IDENTITY_INSERT [dbo].[Races] OFF;

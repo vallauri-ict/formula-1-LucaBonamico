@@ -9,21 +9,23 @@ using System.Web.Http.Cors;
 
 namespace FormulaOneWebAPIProject.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/scores")]
     public class ScoresController : ApiController
     {
         DbTools db = new DbTools();
 
+        [Route("list")]
         public IEnumerable<Score> GetAllScores()
         {
             return db.GetScores().Values;
         }
 
+        [Route("{id:int}")]
         public IHttpActionResult GetRacesScore(int id)
         {
             try
             {
-                Score s = GetAllScores().ElementAt(id);
+                Score s = db.GetScores()[id];
                 return Ok(s);
             }
             catch (Exception)

@@ -42,8 +42,7 @@
                     <img class="card-img-top" v-bind:src="driver.img" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ driver.firstname }} {{ driver.lastname }}</h5>
-                        <p class="card-text">{{ driver.description.substring(0, 150) }}...</p>
-                        <a href="#" class="btn btn-link" style="margin: 0 auto;">More Info</a>
+                        <p>{{ driver.dob }} - {{ driver.placeOfBirth }}</p>
                     </div>
                 </div>
             </div>
@@ -53,7 +52,7 @@
         <div class="row" v-for="(row, index) in rows" v-if="stringa=='teams' && error==''">
             <div class="col-sm-4" v-for="(team) in row">
                 <div class="card" style="display: block; margin: 10px auto; width: 18rem;">
-                    <img class="card-img-top" v-bind:src="team.img" alt="Card image cap" style="width: 286px; height: 136.5px">
+                    <img class="card-img-top" v-bind:src="team.logo" alt="Card image cap" style="width: 286px; height: 136.5px">
                     <div class="card-body">
                         <h5 class="card-title"> {{ team.name }} </h5>
                         <p class="card-text"> {{ team.fullTeamName }} </p>

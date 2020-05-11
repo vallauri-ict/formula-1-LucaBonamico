@@ -24,7 +24,7 @@ $(function () {
 function getDrivers() {
     clear();
     app.stringa = 'drivers';
-    $.getJSON('/api/drivers').done(
+    $.getJSON('/api/drivers/list').done(
         function (data) {
             console.log(data);
             app.drivers = data;
@@ -38,7 +38,7 @@ function getDrivers() {
 function getTeams() {
     clear();
     app.stringa = 'teams';
-    $.getJSON('/api/teams').done(
+    $.getJSON('/api/teams/list').done(
         function (data) {
             console.log(data);
             app.teams = data;
@@ -52,7 +52,7 @@ function getTeams() {
 function getCircuits() {
     clear();
     app.stringa = 'circuits';
-    $.getJSON('/api/circuits').done(
+    $.getJSON('/api/circuits/list').done(
         function (data) {
             console.log(data);
             app.circuits = data;
@@ -65,6 +65,7 @@ function getCircuits() {
 
 function ricercaElemento() {
     let elem;
+    app.rows = [];
     app.error = '';
 
     if (app.idRicerca == '') {
@@ -72,11 +73,16 @@ function ricercaElemento() {
             app.rows[i / 3] = app[app.stringa].slice(i, i + 3);
         }
     } else {
-        elem = app[app.stringa].find(item => item.id == app.idRicerca);
-        if (elem == undefined)
-            app.error = app.stringa.substring(0, app.stringa.length - 1) + ' not found';
-        else
-            app.rows = [[elem]];
+        $.getJSON('/api/' + app.stringa + '/' + app.idRicerca).done(
+            function (data) {
+                console.log(data);
+                //elem = app.rows[[data]];
+                app.rows = [[data]];
+            }
+        ).fail(function (data) {
+            if (data.status == 404)
+                app.error = app.stringa.substring(0, app.stringa.length - 1) + ' not found';
+        });
     }
 }
 

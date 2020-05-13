@@ -25,8 +25,8 @@ namespace FormulaOneWebAPIProject.Controllers
         {
             try
             {
-                Team t = GetAllTeams().ElementAt(id);
-                return Ok(t);
+                Team team = db.LoadTeams().ToList().Find(t => t.Id == id);
+                return Ok(team);
             }
             catch (Exception)
             {

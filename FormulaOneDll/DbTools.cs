@@ -117,7 +117,7 @@ namespace FormulaOneDll
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2),
-                            reader.GetDateTime(3),
+                            reader.GetDateTime(3).ToShortDateString(),
                             reader.GetString(4),
                             GetCountries()[reader.GetString(5)],
                             reader.GetString(6),
@@ -247,6 +247,34 @@ namespace FormulaOneDll
             }
             return scores;
         }
+
+        /*public Dictionary<int, RacesScore> GetRaceResults()
+        {
+            RacesScore[] results = new RacesScore[20];
+
+            var con = new SqlConnection(CONNSTR);
+
+            using (con)
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM RacesScores WHERE extRace=@id", con);
+                command.Parameters.AddWithValue("@id", 1);
+                con.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    RacesScore rs = new RacesScore(
+                        reader.GetInt32(0),
+                        GetDrivers()[reader.GetInt32(1)],
+                        GetScores()[reader.GetInt32(2)],
+                        GetRaces()[reader.GetInt32(3)],
+                        reader.GetString(4));
+                    
+                }
+            }
+
+        }*/
 
         public BindingList<Team> LoadTeams()
         {

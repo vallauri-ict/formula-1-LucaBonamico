@@ -25,7 +25,19 @@ namespace FormulaOneWebAPIProject.Controllers
         {
             try
             {
-                RacesScore rS = db.GetRacesScores()[id];
+                List<RacesScore> rS = db.GetRacesScores().Values.ToList().FindAll(r => r.Race.Id == id);
+                rS = rS.OrderBy(r => r.Pos.Pos).ToList();
+                for (int i = 0; i < rS.Count; i++)
+                {
+                    if (rS[i].Pos.Pos == 0)
+                    {
+                        RacesScore r = rS[i];
+                        rS.RemoveAt(i--);
+                        rS.Add(r);
+                    }
+                    else
+                        break;
+                }
                 return Ok(rS);
             }
             catch (Exception)

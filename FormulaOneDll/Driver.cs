@@ -18,7 +18,7 @@ namespace FormulaOneDll
         [DataMember(Name = "lastname")]
         private string lastname;
         [DataMember(Name = "dob")]
-        private DateTime dob;
+        private String dob;
         [DataMember(Name = "placeOfBirth")]
         private string placeOfBirth;
         [DataMember(Name = "country")]
@@ -34,7 +34,7 @@ namespace FormulaOneDll
 
         public Driver(int id) { this.id = id; }
 
-        public Driver(int id, string firstname, string lastname, DateTime dob, string placeOfBirthday, Country country, string img, string description) : this (id)
+        public Driver(int id, string firstname, string lastname, String dob, string placeOfBirthday, Country country, string img, string description) : this (id)
         {
             this.Firstname = firstname;
             this.Lastname = lastname;
@@ -50,7 +50,7 @@ namespace FormulaOneDll
         public int Id { get => id; }
         public string Firstname { get => firstname; set => firstname = value; }
         public string Lastname { get => lastname; set => lastname = value; }
-        public DateTime Dob { get => dob; set => dob = value; }
+        public String Dob { get => dob; set => dob = value; }
         public string PlaceOfBirth { get => placeOfBirth; set => placeOfBirth = value; }
         public Country Country { get => country; set => country = value; }
         public string Img { get => img; set => img = value; }

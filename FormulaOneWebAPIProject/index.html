@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
 </head>
 <body>
+    <!-- navbar -->
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">FormulaOne</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <button id="btnDrivers" class="btn btn-primary" style="margin: 15px;" v-on:click="driversClick()">Drivers</button>
+        </div>
+    </nav> -->
     <div class="container-fluid" id="div">
         <div class="row">
             <div class="col-sm-3"></div>
@@ -18,18 +29,12 @@
                 <button id="btnDrivers" class="btn btn-primary" style="margin: 15px;" v-on:click="driversClick()">Drivers</button>
                 <button id="btnTeams" class="btn btn-primary" style="margin: 15px;" v-on:click="teamsClick()">Teams</button>
                 <button id="btnCircuits" class="btn btn-primary" style="margin: 15px;" v-on:click="circuitsClick()">Circuits</button>
+                <button id="btnRacesScores" class="btn btn-primary" style="margin: 15px;" v-on:click="racesscoresClick()">Races Scores</button>
             </div>
             <div class="col-sm-3"></div>
         </div>
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="txtRicerca" placeholder="Cerca per id" v-model="idRicerca" v-on:input="ricerca()" v-bind:disabled="stringa==''"/>
-            </div>
-            <div class="col-sm-4"></div>
-        </div>
         <hr />
-        
+
         <div class="row" v-if="error!=''">
             <div class="col-sm-12">
                 <h3 class="text-center" style="color: red"> {{ error }}</h3>
@@ -39,15 +44,68 @@
         <div class="row" v-for="(row, index) in rows" v-if="stringa=='drivers' && error==''">
             <div class="col-sm-4" v-for="(driver) in row">
                 <div class="card" style="display: block; margin: 10px auto; width: 18rem;">
-                    <img class="card-img-top" v-bind:src="driver.img" alt="Card image cap">
+                    <img class="card-img-top" v-bind:src="driver.img">
                     <div class="card-body">
                         <h5 class="card-title">{{ driver.firstname }} {{ driver.lastname }}</h5>
-                        <p>{{ driver.dob }} - {{ driver.placeOfBirth }}</p>
+                        <button class="btn btn-info form-control" v-on:click="infoClik(driver.id)">Info</button>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <!-- driver detail -->
+        <div class="row" v-if="stringa=='driverDetail' && error==''">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-9">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-sm-7">
+                        <img v-bind:src="driverDetail.img" style="width: 600px;"/>
+                    </div>
+                    <div class="col-sm-5" style="background-color: #ddd">
+                        
+                        <table class="stat-list" style="width: 100%; margin: 40px 20px 20px 20px; font-size: 1.2rem;">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">FirstName</span>
+                                    </th>
+                                    <td class="stat-value">{{ driverDetail.firstname }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">LastName</span>
+                                    </th>
+                                    <td class="stat-value">{{ driverDetail.lastname }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Country</span>
+                                    </th>
+                                    <td class="stat-value">{{ driverDetail.country.countryName }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Date of birth</span>
+                                    </th>
+                                    <td class="stat-value">{{ driverDetail.dob }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Place of birth</span>
+                                    </th>
+                                    <td class="stat-value">{{ driverDetail.placeOfBirth }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="margin: 20px;">{{ driverDetail.description.substring(0, 500) }}...
+                            <a :href="'https:///en.wikipedia.org/wiki/'+driverDetail.firstname+'_'+driverDetail.lastname" target="_blank">Learn More</a>
+                        </p>
+                        <button class="btn btn-primary form-control" v-on:click="backClick()">Back</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+
         <!-- teams card -->
         <div class="row" v-for="(row, index) in rows" v-if="stringa=='teams' && error==''">
             <div class="col-sm-4" v-for="(team) in row">
@@ -55,13 +113,74 @@
                     <img class="card-img-top" v-bind:src="team.logo" alt="Card image cap" style="width: 286px; height: 136.5px">
                     <div class="card-body">
                         <h5 class="card-title"> {{ team.name }} </h5>
-                        <p class="card-text"> {{ team.fullTeamName }} </p>
-                        <a href="#" class="btn btn-link" style="margin: 0 auto;">More Info</a>
+                        <button class="btn btn-info form-control" v-on:click="infoClik(team.id)">Info</button>
                     </div>
                 </div>
             </div>
+        </div>        
+        <!-- team detail -->
+        <div class="row" v-if="stringa=='teamDetail' && error==''">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <div class="row" style="margin: 10px;">
+                    <div class="col-sm-6" style="background-color: #ddd; padding: 0; height: fit-content;">
+                        <img :src="teamDetail.img" style="width: 300px; padding: 20px;" />
+                        <table class="stat-list" style="width: 100%; margin: 20px;">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Name</span>
+                                    </th>
+                                    <td class="stat-value">{{ teamDetail.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Full Team Name</span>
+                                    </th>
+                                    <td class="stat-value">{{ teamDetail.fullTeamName }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Base</span>
+                                    </th>
+                                    <td class="stat-value">{{ teamDetail.country.countryName }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Technical Chief</span>
+                                    </th>
+                                    <td class="stat-value">{{ teamDetail.technicalChief }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Chassis</span>
+                                    </th>
+                                    <td class="stat-value">{{ teamDetail.chassis }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="stat-key">
+                                        <span class="text">Power Unit</span>
+                                    </th>
+                                    <td class="stat-value">{{ teamDetail.powerUnit }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary" style="width: 90%; margin: 0 auto 10px auto; display: block;" v-on:click="backClick()">Back</button>
+                    </div>
+         
+                    <div class="col-sm-3" style="padding: 0;">
+                        <img :src="teamDetail.firstDriver.img" style="height: 25.5%;" />
+                        <h5 class="text-center" style="font-weight: bold; margin-top: 30px;">{{ teamDetail.firstDriver.firstname }} {{ teamDetail.firstDriver.lastname }}</h5>
+                    </div>
+                    <div class="col-sm-3" style="padding: 0 15px 0 0;">
+                        <img :src="teamDetail.secondDriver.img" style="height: 25.5%" />
+                        <h5 class="text-center" style="font-weight: bold; margin-top: 30px;">{{ teamDetail.secondDriver.firstname }} {{ teamDetail.secondDriver.lastname }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
         </div>
-        
+
 
         <!-- circuits card -->
         <div class="row" v-for="(row, index) in rows" v-if="stringa=='circuits' && error==''">
@@ -71,9 +190,40 @@
                     <div class="card-body">
                         <h5 class="card-title"> {{ circuit.name }} </h5>
                         <p class="card-text"> {{ circuit.country.countryName }} </p>
-                        <a href="#" class="btn btn-link" style="margin: 0 auto;">More Info</a>
+                        <a :href="'https://en.wikipedia.org/wiki/'+circuit.name.replace(' ', '_')" class="btn btn-info form-control" style="margin: 0 auto;" target="_blank">Info</a>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- racesScores -->
+        <div class="row" v-if="stringa=='racesScores' && error==''">
+            <div class="col-sm-4" style="padding: 0 30px;">
+                <h3>Races</h3>
+                <select v-on:change="raceResultsClick()" v-model="raceId" class="form-control">
+                    <option v-for="(race) in races" v-bind:value="race.id">{{ race.circuit.country.countryName }}</option>
+                </select>
+            </div>
+            <div class="col-sm-8" style="padding: 0 30px;">
+                <h3>Race Result</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Pos</th>
+                            <th scope="col">Driver</th>
+                            <th scope="col">PTS</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(result) in racesScores">
+                            <th>{{ result.pos.pos }}</th>
+                            <th>{{ result.driver.firstname }} {{ result.driver.lastname }}</th>
+                            <th>{{ result.pos.score }}</th>
+                            <th>{{ result.pos.description }}</th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

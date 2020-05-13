@@ -7,16 +7,23 @@ $(function () {
             drivers: [],
             teams: [],
             circuits: [],
+            racesScores: [],
+            races: [],
             rows: [],
+            driverDetail: [],
+            teamDetail: [],
             stringa: '',
-            idRicerca: '',
+            raceId: '',
             error: ''
         },
         methods: {
             driversClick: getDrivers,
             teamsClick: getTeams,
             circuitsClick: getCircuits,
-            ricerca: ricercaElemento
+            racesscoresClick: getRacesScores,
+            raceResultsClick: getRaceResults,
+            infoClik: ricercaElemento,
+            backClick: back
         }
     });
 });
@@ -63,26 +70,62 @@ function getCircuits() {
         });
 }
 
-function ricercaElemento() {
-    let elem;
+function getRacesScores() {
+    clear();
+    app.stringa = 'racesScores';
+    $.getJSON('/api/races/list').done(
+        function (data) {
+            console.log(data);
+            app.races = data;
+        });
+}
+
+function getRaceResults() {
+    console.log(app.raceId);
+    $.getJSON('/api/racesScores/' + app.raceId).done(
+        function (data) {
+            console.log(data);
+            app.racesScores = data;
+        });
+}
+
+function ricercaElemento(id) {
     app.rows = [];
     app.error = '';
 
-    if (app.idRicerca == '') {
-        for (let i = 0; i < app[app.stringa].length; i += 3) {
-            app.rows[i / 3] = app[app.stringa].slice(i, i + 3);
-        }
-    } else {
-        $.getJSON('/api/' + app.stringa + '/' + app.idRicerca).done(
-            function (data) {
-                console.log(data);
-                //elem = app.rows[[data]];
-                app.rows = [[data]];
+    console.log(id);
+
+    $.getJSON('/api/' + app.stringa + '/' + id).done(
+        function (data) {
+            console.log(data);
+            if (app.stringa == 'drivers') {
+                app.driverDetail = data;
+                app.stringa = 'driverDetail';
             }
-        ).fail(function (data) {
-            if (data.status == 404)
-                app.error = app.stringa.substring(0, app.stringa.length - 1) + ' not found';
-        });
+            else {
+                app.teamDetail = data;
+                app.stringa = 'teamDetail';
+            }
+        }
+    ).fail(function (data) {
+        if (data.status == 404)
+            app.error = app.stringa + ' not found';
+    });
+}
+
+function back() {
+    clear();
+    switch (app.stringa) {
+        case "driverDetail":
+            app.stringa = "drivers";
+            app.driverDetail = [];
+            getDrivers();
+            break;
+        case "teamDetail":
+            app.stringa = "teams";
+            app.teamDetail = [];
+            getTeams();
+            break;
     }
 }
 
